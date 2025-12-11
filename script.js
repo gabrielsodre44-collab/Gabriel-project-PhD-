@@ -1,30 +1,24 @@
-const search = document.getElementById("search");
-const results = document.getElementById("results");
+const dish = document.getElementById("dish");
+const btn = document.getElementById("spawnBtn");
 
-// renderiza os cards
-function render(data) {
-    results.innerHTML = "";
-    data.forEach(b => {
-        results.innerHTML += `
-            <div class="card">
-                <h3>${b.nome}</h3>
-                <p><b>Gram:</b> ${b.gram}</p>
-                <p><b>Morfologia:</b> ${b.morfologia}</p>
-                <p><b>Testes:</b> ${b.testes.join(", ")}</p>
-                <p><b>Importância clínica:</b> ${b.importancia}</p>
-            </div>
-        `;
-    });
+function spawnBacteria() {
+    for (let i = 0; i < 40; i++) {  
+        const b = document.createElement("div");
+        b.classList.add("bacteria");
+
+        const size = Math.random() * 10 + 8;
+        b.style.width = size + "px";
+        b.style.height = size + "px";
+
+        b.style.top = Math.random() * 320 + "px";
+        b.style.left = Math.random() * 320 + "px";
+
+        const color = ["#00ff9d", "#00eaff", "#ff00c8", "#f3ff00"][Math.floor(Math.random()*4)];
+        b.style.background = color;
+        b.style.boxShadow = `0 0 12px ${color}`;
+
+        dish.appendChild(b);
+    }
 }
 
-// render inicial
-render(bacteriaDatabase);
-
-// busca
-search.addEventListener("input", () => {
-    const termo = search.value.toLowerCase();
-    const filtrado = bacteriaDatabase.filter(b =>
-        b.nome.toLowerCase().includes(termo)
-    );
-    render(filtrado);
-});
+btn.addEventListener("click", spawnBacteria);
